@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2d669265313086d43a3f65d99e93ac3b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4890085278179872738
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 11896
+  packageName: Adventure Creator
+  packageVersion: 1.85.5
+  assetPath: Assets/AdventureCreator/2D Demo/Scenes/ParkSettings.lighting
+  uploadId: 838102

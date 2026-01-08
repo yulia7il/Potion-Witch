@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7077f6858e9e148358ad7910e4cac56d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 11896
+  packageName: Adventure Creator
+  packageVersion: 1.85.5
+  assetPath: Assets/AdventureCreator/Scripts/Templates/InputSystem/Assets/InputSystem_MenuManager.asset
+  uploadId: 838102

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b4a24d0e4a28423fb3249b923d7e418, type: 3}
+  m_Name: PotionWitch_ManagerPackage
+  m_EditorClassIdentifier: AC::AC.ManagerPackage
+  actionsManager: {fileID: 11400000, guid: f5020c1f9750ab044ad0d9a944803298, type: 2}
+  sceneManager: {fileID: 11400000, guid: e67c6d90c1d3f5c418ad6b8699e9e551, type: 2}
+  settingsManager: {fileID: 11400000, guid: 89783b4a5a23aba44a6f58bd9a88f8e5, type: 2}
+  inventoryManager: {fileID: 11400000, guid: bbcd066cfb32d8843a07394b7bd76dc2, type: 2}
+  variablesManager: {fileID: 11400000, guid: d339bd8149d10354cbe7a40449f6e257, type: 2}
+  speechManager: {fileID: 11400000, guid: f74677170e059a94e9130c32c3d51154, type: 2}
+  cursorManager: {fileID: 11400000, guid: 1fcdeee2a229aa447aac4ab5a4482a39, type: 2}
+  menuManager: {fileID: 11400000, guid: 5547b9bc1a6b5e84f8eeb6f17ac1e299, type: 2}
