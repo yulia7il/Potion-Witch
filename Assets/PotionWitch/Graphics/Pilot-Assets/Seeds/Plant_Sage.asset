@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Plant_Sage
   m_EditorClassIdentifier: Assembly-CSharp::SeedItem
   id: Plant_Sage
-  seedIcon: {fileID: -9206888777637653735, guid: 74c2baa77966daa40be9dd8fb2d60eff, type: 3}
+  seedIcon: {fileID: 21300000, guid: 74c2baa77966daa40be9dd8fb2d60eff, type: 3}
   leafIcon: {fileID: -2579403789580530901, guid: b5c67f6416b06ed4caae10d674ef2cdb, type: 3}
-  plantPrefab: {fileID: 0}
+  plantPrefab: {fileID: 2287201053190541031, guid: e6c172569540621408e9e732ddeb235c, type: 3}

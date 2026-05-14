@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 74c2baa77966daa40be9dd8fb2d60eff
+guid: a8e5141bf1d6dd747b94d37666892b6c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -9206888777637653735
-    second: Seed_Sage_0
-  - first:
-      213: -5164652397602644184
-    second: Seed_Sage_1
-  - first:
-      213: -410205917084004209
-    second: Seed_Sage_2
+      213: 5064393210098865087
+    second: Plant Mint Growing_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -145,57 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Seed_Sage_0
-      rect:
-        serializedVersion: 2
-        x: 33
-        y: 67
-        width: 43
-        height: 47
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 913906adf6f8a3080800000000000000
-      internalID: -9206888777637653735
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Seed_Sage_1
+      name: Plant Mint Growing_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 19
-        width: 49
-        height: 38
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 82f568402087358b0800000000000000
-      internalID: -5164652397602644184
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Seed_Sage_2
-      rect:
-        serializedVersion: 2
-        x: 68
         y: 0
-        width: 36
-        height: 50
+        width: 249
+        height: 396
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f80d17b44e7ae4af0800000000000000
-      internalID: -410205917084004209
+      spriteID: fb3d7d2dac6584640800000000000000
+      internalID: 5064393210098865087
       vertices: []
       indices: 
       edges: []
@@ -214,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -224,9 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Seed_Sage_0: -9206888777637653735
-      Seed_Sage_1: -5164652397602644184
-      Seed_Sage_2: -410205917084004209
+      Plant Mint Growing_0: 5064393210098865087
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
