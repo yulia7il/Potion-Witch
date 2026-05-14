@@ -67,6 +67,7 @@
     <Compile Include="Assets\PotionWitch\Scripts\PlantGrowth.cs" />
     <Compile Include="Assets\PotionWitch\Scripts\UIPlantItem.cs" />
     <Compile Include="Assets\PotionWitch\Scripts\PlantPot.cs" />
+    <Compile Include="Assets\PotionWitch\Scripts\SunSlot.cs" />
     <Compile Include="Assets\PotionWitch\Scripts\UIDragSeed.cs" />
   </ItemGroup>
   <ItemGroup>

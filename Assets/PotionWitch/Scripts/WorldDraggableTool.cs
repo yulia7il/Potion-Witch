@@ -9,6 +9,17 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Collider2D))]
 public class WorldDraggableTool : MonoBehaviour
 {
+    // Drop-target behavior switches on this. WaterCan looks for PlantPots,
+    // Sun looks for SunSlots. Future tools can add their own case.
+    public enum ToolType
+    {
+        WaterCan,
+        Sun
+    }
+
+    [Tooltip("What this tool does on release. WaterCan -> PlantPot.Water(). Sun -> SunSlot.Fill().")]
+    [SerializeField] private ToolType toolType = ToolType.WaterCan;
+
     [Tooltip("Optional. Camera used to convert mouse screen position into world space. " +
              "Falls back to Camera.main if left empty.")]
     public Camera dragCamera;
@@ -102,12 +113,28 @@ public class WorldDraggableTool : MonoBehaviour
     }
 
     // Decides what happens when the player releases the tool.
-    // Default behavior: log on a pot, otherwise snap back.
-    // Future tools can override OnDroppedOnPot / OnDroppedOnEmpty to extend this.
+    // Branches on toolType so each tool only looks for targets it cares about.
     private void EndDrag()
     {
         isDragging = false;
 
+        switch (toolType)
+        {
+            case ToolType.WaterCan:
+                HandleWaterCanRelease();
+                break;
+            case ToolType.Sun:
+                HandleSunRelease();
+                break;
+            default:
+                OnDroppedOnEmpty();
+                break;
+        }
+    }
+
+    // WaterCan: look for a pot, water it if found, otherwise go home.
+    private void HandleWaterCanRelease()
+    {
         PlantPot pot = TryFindPotUnderPointer();
         if (pot != null)
         {
@@ -116,6 +143,21 @@ public class WorldDraggableTool : MonoBehaviour
         else
         {
             OnDroppedOnEmpty();
+        }
+    }
+
+    // Sun: look for an empty SunSlot, fill it and consume the dragged sun.
+    // On miss or already-filled slot, snap back to the start position.
+    private void HandleSunRelease()
+    {
+        SunSlot slot = TryFindSunSlotUnderPointer();
+        if (slot != null && slot.Fill())
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            ReturnToStart();
         }
     }
 
@@ -177,6 +219,21 @@ public class WorldDraggableTool : MonoBehaviour
 
         // GetComponentInParent so the pot's collider can sit on a child object.
         return hit.GetComponentInParent<PlantPot>();
+    }
+
+    // Looks for a SunSlot whose Collider2D contains the current mouse position.
+    // Returns null if nothing matching is found.
+    private SunSlot TryFindSunSlotUnderPointer()
+    {
+        Vector3 mouseWorld = GetMouseWorldPosition();
+        Vector2 point = new Vector2(mouseWorld.x, mouseWorld.y);
+
+        Collider2D hit = Physics2D.OverlapPoint(point);
+        if (hit == null) return null;
+
+        // GetComponentInParent so the slot's collider can sit on a child object
+        // (e.g. on the Silhouette child rather than the Slot root).
+        return hit.GetComponentInParent<SunSlot>();
     }
 
     // Snaps the tool back to where it sat at the start of the scene.
