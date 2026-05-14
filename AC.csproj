@@ -491,8 +491,8 @@
     <Compile Include="Assets\AdventureCreator\Scripts\Logic\Editor\DialogueOptionEditor.cs" />
     <Compile Include="Assets\AdventureCreator\Scripts\Static\GlobalVariables.cs" />
     <Compile Include="Assets\AdventureCreator\Scripts\Save system\FileFormat\FileFormatHandler_Xml.cs" />
-    <Compile Include="Assets\AdventureCreator\Scripts\Logic\Conversation.cs" />
     <Compile Include="Assets\AdventureCreator\Scripts\Save system\FileHandling\SaveFileHandler_SystemFile.cs" />
+    <Compile Include="Assets\AdventureCreator\Scripts\Logic\Conversation.cs" />
     <Compile Include="Assets\AdventureCreator\Scripts\Camera\Editor\_CameraEditor.cs" />
     <Compile Include="Assets\AdventureCreator\Scripts\Menu\OptionalMouseInputModule.cs" />
     <Compile Include="Assets\AdventureCreator\Scripts\Input\ActiveInputsEditor.cs" />
