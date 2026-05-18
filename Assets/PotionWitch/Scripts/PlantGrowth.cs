@@ -32,15 +32,16 @@ public class PlantGrowth : MonoBehaviour
         ShowStage(GrowthStage.Spore);
     }
 
-    // Public entry point. PlantPot calls this when the player waters the pot.
-    // Advances Spore → Mature for now. Mature → Full will hook in later.
+    // Advances the plant one step along the growth chain:
+    // Spore → Mature → Full → (stays Full, does nothing).
     public void GrowToNextStage()
     {
-        if (CurrentStage == GrowthStage.Spore)
+        switch (CurrentStage)
         {
-            ShowStage(GrowthStage.Mature);
+            case GrowthStage.Spore:   ShowStage(GrowthStage.Mature); break;
+            case GrowthStage.Mature:  ShowStage(GrowthStage.Full);   break;
+            case GrowthStage.Full:    /* already at max */            break;
         }
-        // Mature → Full intentionally left out until later requirements land.
     }
 
     // Centralized visibility switch. All show/hide goes through here so adding

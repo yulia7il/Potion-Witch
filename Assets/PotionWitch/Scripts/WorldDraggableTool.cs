@@ -24,6 +24,9 @@ public class WorldDraggableTool : MonoBehaviour
              "Falls back to Camera.main if left empty.")]
     public Camera dragCamera;
 
+    // Set by SunSpawner at instantiation time so this sun can report back when resolved.
+    [HideInInspector] public SunSpawner parentSpawner;
+
     // Our own collider, cached in Awake. On pointer-down we test whether the
     // Physics2D hit under the cursor belongs to this object (or a child).
     private Collider2D ownCollider;
@@ -147,16 +150,35 @@ public class WorldDraggableTool : MonoBehaviour
     }
 
     // Sun: look for an empty SunSlot, fill it and consume the dragged sun.
-    // On miss or already-filled slot, snap back to the start position.
+    // Own collider is disabled before the overlap check so Physics2D sees through
+    // the Sun to the slot underneath, then re-enabled only if the Sun returns to start.
     private void HandleSunRelease()
     {
+        ownCollider.enabled = false;
+
         SunSlot slot = TryFindSunSlotUnderPointer();
-        if (slot != null && slot.Fill())
+
+        if (slot == null)
         {
-            gameObject.SetActive(false);
+            Debug.Log("[WorldDrag] Sun: no slot found under pointer");
+            ownCollider.enabled = true;
+            ReturnToStart();
+            return;
+        }
+
+        Debug.Log($"[WorldDrag] Sun dropped on slot '{slot.name}'");
+
+        if (slot.Fill())
+        {
+            Debug.Log($"[WorldDrag] Slot fill succeeded on '{slot.name}'");
+            slot.GetComponentInParent<SunSlotsManager>()?.CheckCompletion();
+            parentSpawner?.NotifyActiveSunResolved();
+            Destroy(gameObject);
         }
         else
         {
+            Debug.Log($"[WorldDrag] Slot fill failed — '{slot.name}' already filled");
+            ownCollider.enabled = true;
             ReturnToStart();
         }
     }

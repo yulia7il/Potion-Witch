@@ -20,6 +20,9 @@ public class PlantPot : MonoBehaviour
     [Tooltip("SunSlots row linked to this pot. Activated with the correct count when a plant is placed.")]
     [SerializeField] private SunSlotsManager sunSlotsManager;
 
+    [Tooltip("SunJar linked to this pot. Receives the sun budget when a plant is placed.")]
+    [SerializeField] private SunSpawner sunSpawner;
+
     // Cached references to the plant we spawned. Kept private so external
     // callers go through Water() / future helpers instead of poking at state.
     private GameObject currentPlantInstance;
@@ -48,7 +51,15 @@ public class PlantPot : MonoBehaviour
             waterMeterUI.Show();
         }
         sunSlotsManager?.ShowSlots(plantData.requiredSunCount);
+        sunSpawner?.SetAvailableSuns(plantData.requiredSunCount);
         return true;
+    }
+
+    // Called by SunSlotsManager when every active SunSlot has been filled.
+    public void OnAllSunSlotsFilled()
+    {
+        Debug.Log($"[PlantPot] All sun slots filled on '{name}' — advancing growth");
+        currentPlantGrowth?.GrowToNextStage();
     }
 
     // Called by WorldDraggableTool (Water Can) when released on this pot.

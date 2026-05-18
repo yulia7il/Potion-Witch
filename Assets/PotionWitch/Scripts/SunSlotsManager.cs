@@ -12,6 +12,9 @@ public class SunSlotsManager : MonoBehaviour
     [Tooltip("Ordered list of SunSlot children (Slot_0 first).")]
     public List<SunSlot> slots;
 
+    [Tooltip("The PlantPot to notify when all active slots are filled.")]
+    [SerializeField] private PlantPot plantPot;
+
     // Activates the first `amount` slots in their empty state; deactivates the rest.
     public void ShowSlots(int amount)
     {
@@ -34,5 +37,27 @@ public class SunSlotsManager : MonoBehaviour
                 slot.gameObject.SetActive(false);
             }
         }
+    }
+
+    // Returns true only if every currently active slot has been filled.
+    public bool AreAllActiveSlotsFilled()
+    {
+        if (slots == null) return false;
+        foreach (SunSlot slot in slots)
+        {
+            if (slot == null) continue;
+            if (!slot.gameObject.activeInHierarchy) continue;
+            if (!slot.isFilled) return false;
+        }
+        return true;
+    }
+
+    // Called by WorldDraggableTool after each successful slot fill.
+    // Notifies PlantPot if all active slots are now filled.
+    public void CheckCompletion()
+    {
+        if (!AreAllActiveSlotsFilled()) return;
+        Debug.Log("[SunSlotsManager] All active slots filled");
+        plantPot?.OnAllSunSlotsFilled();
     }
 }
