@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 1250994}
   - component: {fileID: 1250996}
   - component: {fileID: 1250995}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Item Box (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 25730759}
   - component: {fileID: 25730760}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ItemPanels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +631,7 @@ GameObject:
   - component: {fileID: 292497781}
   - component: {fileID: 292497780}
   - component: {fileID: 292497779}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -831,7 +831,7 @@ GameObject:
   - component: {fileID: 395712182}
   - component: {fileID: 395712184}
   - component: {fileID: 395712183}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: INV_Inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -981,7 +981,7 @@ GameObject:
   - component: {fileID: 777432587}
   - component: {fileID: 777432589}
   - component: {fileID: 777432588}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: INV_BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1183,9 +1183,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -6063989
-  m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingLayerID: 1315350979
+  m_SortingLayer: 1
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: -8847511328382704733, guid: a41b9634c1da5df4c81d6ce6e1c68ee0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1256,7 +1256,7 @@ GameObject:
   - component: {fileID: 1122131237}
   - component: {fileID: 1122131239}
   - component: {fileID: 1122131238}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Item Box (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1529,8 +1529,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -942670781
-  m_SortingLayer: 3
+  m_SortingLayerID: -6063989
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 6085338041668243844, guid: 9d0936b6c95ce1f479a3a582257506b2, type: 3}
@@ -1605,9 +1605,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -6063989
-  m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingLayerID: 1315350979
+  m_SortingLayer: 1
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: -8847511328382704733, guid: a41b9634c1da5df4c81d6ce6e1c68ee0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1698,8 +1698,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -942670781
-  m_SortingLayer: 3
+  m_SortingLayerID: 11001935
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -6925970699727803419, guid: 222397ee66247e640bdd18cee025eacd, type: 3}
@@ -1739,6 +1739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6fca8140a8284b46aeb4370bfd4a89d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldDraggableTool
+  toolType: 0
   dragCamera: {fileID: 2087980762}
 --- !u!61 &1388131452
 BoxCollider2D:
@@ -1850,8 +1851,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -942670781
-  m_SortingLayer: 3
+  m_SortingLayerID: 1035019385
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -8325030217083487256, guid: 604bccdbf1cc92648a0ed18514cbbc91, type: 3}
@@ -1895,7 +1896,7 @@ MonoBehaviour:
   plantSpawnPoint: {fileID: 1763702300}
   isOccupied: 0
   plusSignHint: {fileID: 2114906421}
-  waterMeterUI: {fileID: 0}
+  waterMeterUI: {fileID: 1815828807}
 --- !u!60 &1616848868
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2272,6 +2273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1815828806}
+  - component: {fileID: 1815828807}
   m_Layer: 5
   m_Name: WaterMeter
   m_TagString: Untagged
@@ -2301,6 +2303,18 @@ RectTransform:
   m_AnchoredPosition: {x: -242, y: -473}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1815828807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815828805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a2c9f1b4e7d4a4e9b1c2d3e4f5a6b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlantWaterMeterUI
 --- !u!1 &1837648641
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,7 +2326,7 @@ GameObject:
   - component: {fileID: 1837648642}
   - component: {fileID: 1837648644}
   - component: {fileID: 1837648643}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Item Box (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2453,8 +2467,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -942670781
-  m_SortingLayer: 3
+  m_SortingLayerID: -6063989
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -963310697827366179, guid: f5a9fbd0d7a22d84db7dd7b47b44f1f3, type: 3}
@@ -2478,7 +2492,7 @@ GameObject:
   - component: {fileID: 1882731337}
   - component: {fileID: 1882731339}
   - component: {fileID: 1882731338}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Item Box (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2874,7 +2888,7 @@ GameObject:
   - component: {fileID: 2114906424}
   - component: {fileID: 2114906423}
   - component: {fileID: 2114906425}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Plant PLUS sign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3005,7 +3019,7 @@ GameObject:
   - component: {fileID: 6603566728191204684}
   - component: {fileID: 6996321002670964898}
   - component: {fileID: 6985328280364254747}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Leaf_Sage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3023,7 +3037,7 @@ GameObject:
   - component: {fileID: 1254355426567401506}
   - component: {fileID: 1512709899576811529}
   - component: {fileID: 2229724299127592146}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text_Mint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3041,7 +3055,7 @@ GameObject:
   - component: {fileID: 5857864756846830651}
   - component: {fileID: 7780013316948146645}
   - component: {fileID: 7646860421471960940}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Leaf_Mint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3059,7 +3073,7 @@ GameObject:
   - component: {fileID: 1983723052632656213}
   - component: {fileID: 2166791784849496446}
   - component: {fileID: 1449691142365965733}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text_Sage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3123,7 +3137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1921521336525936699}
   - component: {fileID: 2640116122242609417}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Leaf_Sage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3178,7 +3192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1172441683916759372}
   - component: {fileID: 3336137796233660542}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Leaf_Mint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3288,7 +3302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3932700129122409730}
   - component: {fileID: 1182863637093165982}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3313,7 +3327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4358365034019497077}
   - component: {fileID: 1911114158001378025}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3460,7 +3474,7 @@ GameObject:
   - component: {fileID: 8040022329425991356}
   - component: {fileID: 7712770710116823725}
   - component: {fileID: 7457961050042598478}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Item Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3477,7 +3491,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6737378793268156434}
   - component: {fileID: 3883266014365445913}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Seed_Mint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3515,7 +3529,7 @@ GameObject:
   - component: {fileID: 7312756949939613643}
   - component: {fileID: 7054466735625374682}
   - component: {fileID: 7885737019143585081}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Item Box (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3551,7 +3565,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6309611619243647333}
   - component: {fileID: 4542977381666068078}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Seed_Sage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3629,7 +3643,7 @@ GameObject:
   - component: {fileID: 8447499663846608928}
   - component: {fileID: 8447499663846608930}
   - component: {fileID: 8447499663846608929}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Seed_Mint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3747,7 +3761,7 @@ GameObject:
   - component: {fileID: 9211066481050216791}
   - component: {fileID: 9211066481050216793}
   - component: {fileID: 9211066481050216792}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Seed_Sage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
