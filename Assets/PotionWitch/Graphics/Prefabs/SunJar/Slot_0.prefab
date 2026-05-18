@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8176246066633658310}
   - component: {fileID: 1436613079758079341}
+  - component: {fileID: 1882907103682137278}
   m_Layer: 0
   m_Name: Slot_0
   m_TagString: Untagged
@@ -80,6 +81,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.68128085, y: 0.748109}
   m_EdgeRadius: 0
+--- !u!114 &1882907103682137278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4115145358709456972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3d5f7a9c2e4b6d8f0a1c3e5d7b9f2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SunSlot
+  silhouette: {fileID: 4316971008029878931}
+  filledSun: {fileID: 7733000264455916460}
+  isFilled: 0
 --- !u!1 &4316971008029878931
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2349892801259346087}
   - component: {fileID: 1398695245401180774}
+  - component: {fileID: 1697167179382696948}
   m_Layer: 0
   m_Name: Silhouette
   m_TagString: Untagged
@@ -171,6 +188,52 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!61 &1697167179382696948
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4316971008029878931}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.65, y: 0.7}
+    newSize: {x: 1.3, y: 1.4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.65, y: 0.7}
+  m_EdgeRadius: 0
 --- !u!1 &7733000264455916460
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,6 +244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8705992334366216062}
   - component: {fileID: 4145934945492075947}
+  - component: {fileID: 8568731720004768601}
   m_Layer: 0
   m_Name: FilledSun
   m_TagString: Untagged
@@ -249,7 +313,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 11001935
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 5199979006384268662, guid: 1576280e2edf8e241b93dba2af65d7be, type: 3}
@@ -262,3 +326,49 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!61 &8568731720004768601
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7733000264455916460}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.524, y: 0.54}
+    newSize: {x: 0.524, y: 0.54}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.524, y: 0.54}
+  m_EdgeRadius: 0

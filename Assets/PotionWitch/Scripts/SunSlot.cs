@@ -20,6 +20,14 @@ public class SunSlot : MonoBehaviour
         if (filledSun != null) filledSun.SetActive(false);
     }
 
+    // Resets the slot to its empty visual state. Called by SunSlotsManager on re-planting.
+    public void ResetSlot()
+    {
+        isFilled = false;
+        if (silhouette != null) silhouette.SetActive(true);
+        if (filledSun != null) filledSun.SetActive(false);
+    }
+
     // Called by WorldDraggableTool (Sun) when a Sun is released over this slot.
     // Returns true if the slot actually accepted the Sun.
     public bool Fill()

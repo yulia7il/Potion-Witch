@@ -17,6 +17,9 @@ public class PlantPot : MonoBehaviour
     [Tooltip("Optional. WaterMeter UI shown over the pot once a plant is placed.")]
     [SerializeField] private PlantWaterMeterUI waterMeterUI;
 
+    [Tooltip("SunSlots row linked to this pot. Activated with the correct count when a plant is placed.")]
+    [SerializeField] private SunSlotsManager sunSlotsManager;
+
     // Cached references to the plant we spawned. Kept private so external
     // callers go through Water() / future helpers instead of poking at state.
     private GameObject currentPlantInstance;
@@ -44,6 +47,7 @@ public class PlantPot : MonoBehaviour
             Debug.Log($"[WaterMeter] Calling waterMeterUI.Show() on '{waterMeterUI.name}'.");
             waterMeterUI.Show();
         }
+        sunSlotsManager?.ShowSlots(plantData.requiredSunCount);
         return true;
     }
 

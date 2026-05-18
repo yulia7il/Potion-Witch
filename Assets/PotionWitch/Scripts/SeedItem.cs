@@ -6,7 +6,8 @@ public enum PlantItemType { Seed, Leaf }
 public class PlantData : ScriptableObject
 {
     public string id;         // "mint" / "sage"
-    public Sprite seedIcon;   // аййчеп жштйн
-    public Sprite leafIcon;   // аййчеп тмйн
-    public GameObject plantPrefab; // аефцйермй
+    public Sprite seedIcon;   // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    public Sprite leafIcon;   // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+    public GameObject plantPrefab; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [Min(0)] public int requiredSunCount = 3;
 }
