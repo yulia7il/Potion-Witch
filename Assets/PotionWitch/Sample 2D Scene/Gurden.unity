@@ -1895,6 +1895,7 @@ MonoBehaviour:
   plantSpawnPoint: {fileID: 1763702300}
   isOccupied: 0
   plusSignHint: {fileID: 2114906421}
+  waterMeterUI: {fileID: 0}
 --- !u!60 &1616848868
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2277,7 +2278,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1815828806
 RectTransform:
   m_ObjectHideFlags: 0
