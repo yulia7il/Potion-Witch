@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // Holds a single plant in a pot. Built so future steps
 // (growth stages, watering, harvesting, animations, VFX)
@@ -23,6 +24,12 @@ public class PlantPot : MonoBehaviour
     [Tooltip("SunJar linked to this pot. Receives the sun budget when a plant is placed.")]
     [SerializeField] private SunSpawner sunSpawner;
 
+    [Tooltip("Optional. Popup shown when the player clicks a fully grown plant in this pot.")]
+    [SerializeField] private HarvestPopupController harvestPopupController;
+
+    [Tooltip("Optional. Camera used to convert clicks into world space. Falls back to Camera.main.")]
+    [SerializeField] private Camera clickCamera;
+
     // Cached references to the plant we spawned. Kept private so external
     // callers go through Water() / future helpers instead of poking at state.
     private GameObject currentPlantInstance;
@@ -33,9 +40,49 @@ public class PlantPot : MonoBehaviour
     // a single fill cycle.
     private bool hasBeenWatered;
 
+    // Cached so the harvest popup can render the right reward icon. Stored
+    // here rather than re-derived from the spawned prefab so PlantData stays
+    // the source of truth.
+    private PlantData currentPlantData;
+
     private void Awake()
     {
         if (waterMeterUI != null) waterMeterUI.Hide();
+    }
+
+    private void Update()
+    {
+        TryHandleHarvestClick();
+    }
+
+    // Polls the mouse the same way WorldDraggableTool does — OnMouseDown is
+    // unreliable in this project's setup. Only opens the popup when the
+    // plant in this pot is fully grown and the click landed on this pot's
+    // collider (or a child of it).
+    private void TryHandleHarvestClick()
+    {
+        if (!isOccupied) return;
+        if (currentPlantGrowth == null) return;
+        if (currentPlantGrowth.CurrentStage != PlantGrowth.GrowthStage.Full) return;
+        if (harvestPopupController == null) return;
+        if (currentPlantData == null) return;
+
+        Mouse mouse = Mouse.current;
+        if (mouse == null) return;
+        if (!mouse.leftButton.wasPressedThisFrame) return;
+
+        Camera cam = clickCamera != null ? clickCamera : Camera.main;
+        if (cam == null) return;
+
+        Vector2 screenPos = mouse.position.ReadValue();
+        Vector3 screen = new Vector3(screenPos.x, screenPos.y, Mathf.Abs(cam.transform.position.z - transform.position.z));
+        Vector3 world = cam.ScreenToWorldPoint(screen);
+
+        Collider2D hit = Physics2D.OverlapPoint(new Vector2(world.x, world.y));
+        if (hit == null) return;
+        if (hit.GetComponentInParent<PlantPot>() != this) return;
+
+        harvestPopupController.Show(currentPlantData, 1);
     }
 
     // Public entry point. Called by UIDragSeed when a seed is dropped on this pot.
@@ -44,6 +91,7 @@ public class PlantPot : MonoBehaviour
     {
         if (!CanPlant(plantData)) return false;
 
+        currentPlantData = plantData;
         SpawnPlant(plantData.plantPrefab);
         MarkAsOccupied();
         HidePlusSignHint();
