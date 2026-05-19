@@ -24,6 +24,19 @@ public class WorldDraggableTool : MonoBehaviour
              "Falls back to Camera.main if left empty.")]
     public Camera dragCamera;
 
+    [Tooltip("Optional. Particle system that plays while the tool is being dragged. " +
+             "Currently only used by WaterCan.")]
+    [SerializeField] private ParticleSystem dragParticles;
+
+    [Tooltip("Z rotation (degrees) applied to the WaterCan while it is being dragged, " +
+             "so it tilts as if pouring. Restored on release.")]
+    [SerializeField] private float waterCanDragTiltZ = -25f;
+
+    [Tooltip("Optional. Child transform holding the WaterCan sprite (e.g. WaterCan_Visual). " +
+             "When set, only this child tilts during drag, so sibling children like the water " +
+             "ParticleSystem keep their original orientation. If left null, the root tilts as before.")]
+    [SerializeField] private Transform waterCanVisual;
+
     // Set by SunSpawner at instantiation time so this sun can report back when resolved.
     [HideInInspector] public SunSpawner parentSpawner;
 
@@ -33,6 +46,17 @@ public class WorldDraggableTool : MonoBehaviour
 
     // Cached so we can snap the tool back if the drop target is invalid.
     private Vector3 startPosition;
+
+    // Cached so the WaterCan's pour-tilt can be undone on release. Also
+    // restored for any tool routed through ReturnToStart, which is harmless
+    // for tools that never rotated. Used as fallback when waterCanVisual
+    // is not assigned.
+    private Quaternion originalRotation;
+
+    // Cached localRotation of waterCanVisual at Awake. Used to restore the
+    // visual on release without disturbing the root, so siblings (like the
+    // water ParticleSystem) keep their world rotation.
+    private Quaternion originalVisualLocalRotation;
 
     // Offset between the tool's pivot and the mouse at the moment drag started.
     // Without this the tool would jump so its pivot sits exactly on the cursor.
@@ -50,6 +74,8 @@ public class WorldDraggableTool : MonoBehaviour
     private void Awake()
     {
         startPosition = transform.position;
+        originalRotation = transform.rotation;
+        if (waterCanVisual != null) originalVisualLocalRotation = waterCanVisual.localRotation;
         ownCollider = GetComponent<Collider2D>();
     }
 
@@ -103,6 +129,20 @@ public class WorldDraggableTool : MonoBehaviour
         Vector3 mouseWorld = GetMouseWorldPosition();
         grabOffset = transform.position - mouseWorld;
         isDragging = true;
+
+        if (toolType == ToolType.WaterCan)
+        {
+            Quaternion tilt = Quaternion.Euler(0f, 0f, waterCanDragTiltZ);
+            if (waterCanVisual != null)
+            {
+                waterCanVisual.localRotation = originalVisualLocalRotation * tilt;
+            }
+            else
+            {
+                transform.rotation = originalRotation * tilt;
+            }
+            if (dragParticles != null) dragParticles.Play();
+        }
     }
 
     // Updates the tool's world position to follow the mouse, keeping the
@@ -121,6 +161,11 @@ public class WorldDraggableTool : MonoBehaviour
     {
         isDragging = false;
 
+        if (toolType == ToolType.WaterCan && dragParticles != null)
+        {
+            dragParticles.Stop();
+        }
+
         switch (toolType)
         {
             case ToolType.WaterCan:
@@ -135,18 +180,11 @@ public class WorldDraggableTool : MonoBehaviour
         }
     }
 
-    // WaterCan: look for a pot, water it if found, otherwise go home.
+    // WaterCan: watering is driven by particle collisions (see
+    // WaterParticleCollision), so the drop itself just sends the can home.
     private void HandleWaterCanRelease()
     {
-        PlantPot pot = TryFindPotUnderPointer();
-        if (pot != null)
-        {
-            OnDroppedOnPot(pot);
-        }
-        else
-        {
-            OnDroppedOnEmpty();
-        }
+        ReturnToStart();
     }
 
     // Sun: look for an empty SunSlot, fill it and consume the dragged sun.
@@ -185,17 +223,6 @@ public class WorldDraggableTool : MonoBehaviour
 
     // ---------- Extension hooks ----------
 
-    // Called when the tool was released over a PlantPot.
-    // Default behavior: apply watering, then send the tool back home.
-    // Subclasses can override to swap watering for harvesting, etc.
-    protected virtual void OnDroppedOnPot(PlantPot pot)
-    {
-        pot.Water();
-
-        // Watering can is a reusable tool, not a consumable — always go home.
-        ReturnToStart();
-    }
-
     // Called when the tool was released over empty ground.
     // Default: send the tool back to where the player picked it up.
     protected virtual void OnDroppedOnEmpty()
@@ -229,20 +256,6 @@ public class WorldDraggableTool : MonoBehaviour
         return cam.ScreenToWorldPoint(screen);
     }
 
-    // Looks for a PlantPot whose Collider2D contains the current mouse position.
-    // Returns null if nothing matching is found.
-    private PlantPot TryFindPotUnderPointer()
-    {
-        Vector3 mouseWorld = GetMouseWorldPosition();
-        Vector2 point = new Vector2(mouseWorld.x, mouseWorld.y);
-
-        Collider2D hit = Physics2D.OverlapPoint(point);
-        if (hit == null) return null;
-
-        // GetComponentInParent so the pot's collider can sit on a child object.
-        return hit.GetComponentInParent<PlantPot>();
-    }
-
     // Looks for a SunSlot whose Collider2D contains the current mouse position.
     // Returns null if nothing matching is found.
     private SunSlot TryFindSunSlotUnderPointer()
@@ -263,5 +276,13 @@ public class WorldDraggableTool : MonoBehaviour
     public void ReturnToStart()
     {
         transform.position = startPosition;
+        if (waterCanVisual != null)
+        {
+            waterCanVisual.localRotation = originalVisualLocalRotation;
+        }
+        else
+        {
+            transform.rotation = originalRotation;
+        }
     }
 }

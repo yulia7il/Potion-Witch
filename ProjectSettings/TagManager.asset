@@ -51,14 +51,14 @@ TagManager:
   - name: Plant
     uniqueID: 2016700059
     locked: 0
-  - name: WorldForeground
-    uniqueID: 4288903307
-    locked: 0
   - name: ObjectsDrag
     uniqueID: 11001935
     locked: 0
   - name: UI
     uniqueID: 110668127
+    locked: 0
+  - name: WorldForeground
+    uniqueID: 4288903307
     locked: 0
   m_RenderingLayers:
   - Default

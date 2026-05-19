@@ -28,6 +28,11 @@ public class PlantPot : MonoBehaviour
     private GameObject currentPlantInstance;
     private PlantGrowth currentPlantGrowth;
 
+    // True once the water meter has been filled for the current plant. Locks
+    // out further watering progress so the plant only grows one stage from
+    // a single fill cycle.
+    private bool hasBeenWatered;
+
     private void Awake()
     {
         if (waterMeterUI != null) waterMeterUI.Hide();
@@ -70,6 +75,26 @@ public class PlantPot : MonoBehaviour
         if (currentPlantGrowth == null) return false;
 
         currentPlantGrowth.GrowToNextStage();
+        return true;
+    }
+
+    // Called by WaterParticleCollision each time a water particle hits the pot.
+    // Advances the UI meter; once the meter completes, performs the one-shot
+    // watering (Water() + hide meter) and locks out further hits.
+    // Returns true on the call that completed the meter.
+    public bool AddWaterProgress(float amount)
+    {
+        if (!isOccupied) return false;
+        if (currentPlantGrowth == null) return false;
+        if (hasBeenWatered) return false;
+        if (waterMeterUI == null) return false;
+
+        bool filled = waterMeterUI.AddFill(amount);
+        if (!filled) return false;
+
+        hasBeenWatered = true;
+        Water();
+        waterMeterUI.Hide();
         return true;
     }
 
