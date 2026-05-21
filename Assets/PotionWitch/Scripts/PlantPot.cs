@@ -1,10 +1,13 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 // Holds a single plant in a pot. Built so future steps
 // (growth stages, watering, harvesting, animations, VFX)
 // slot in as new small methods rather than growing Plant().
-public class PlantPot : MonoBehaviour
+//
+// Implements IPopupGate so a PopupOpener on the same pot can ask
+// "is this plant harvestable right now?" before opening the harvest popup.
+// Click detection + overlay management live in PopupOpener / PopupManager.
+public class PlantPot : MonoBehaviour, IPopupGate
 {
     [Tooltip("Where the plant prefab will appear. If null, the pot's own transform is used.")]
     public Transform plantSpawnPoint;
@@ -24,12 +27,6 @@ public class PlantPot : MonoBehaviour
     [Tooltip("SunJar linked to this pot. Receives the sun budget when a plant is placed.")]
     [SerializeField] private SunSpawner sunSpawner;
 
-    [Tooltip("Optional. Popup shown when the player clicks a fully grown plant in this pot.")]
-    [SerializeField] private HarvestPopupController harvestPopupController;
-
-    [Tooltip("Optional. Camera used to convert clicks into world space. Falls back to Camera.main.")]
-    [SerializeField] private Camera clickCamera;
-
     // Cached references to the plant we spawned. Kept private so external
     // callers go through Water() / future helpers instead of poking at state.
     private GameObject currentPlantInstance;
@@ -40,50 +37,25 @@ public class PlantPot : MonoBehaviour
     // a single fill cycle.
     private bool hasBeenWatered;
 
-    // Cached so the harvest popup can render the right reward icon. Stored
-    // here rather than re-derived from the spawned prefab so PlantData stays
-    // the source of truth.
-    private PlantData currentPlantData;
-
     private void Awake()
     {
         if (waterMeterUI != null) waterMeterUI.Hide();
     }
 
-    private void Update()
+    // ---------- Harvest gate ----------
+
+    // True when this pot holds a fully grown plant the player can harvest.
+    public bool CanHarvest()
     {
-        TryHandleHarvestClick();
+        if (!isOccupied) return false;
+        if (currentPlantGrowth == null) return false;
+        return currentPlantGrowth.CurrentStage == PlantGrowth.GrowthStage.Full;
     }
 
-    // Polls the mouse the same way WorldDraggableTool does — OnMouseDown is
-    // unreliable in this project's setup. Only opens the popup when the
-    // plant in this pot is fully grown and the click landed on this pot's
-    // collider (or a child of it).
-    private void TryHandleHarvestClick()
-    {
-        if (!isOccupied) return;
-        if (currentPlantGrowth == null) return;
-        if (currentPlantGrowth.CurrentStage != PlantGrowth.GrowthStage.Full) return;
-        if (harvestPopupController == null) return;
-        if (currentPlantData == null) return;
+    // IPopupGate — used by PopupOpener on this pot to gate the harvest popup.
+    bool IPopupGate.CanOpen() => CanHarvest();
 
-        Mouse mouse = Mouse.current;
-        if (mouse == null) return;
-        if (!mouse.leftButton.wasPressedThisFrame) return;
-
-        Camera cam = clickCamera != null ? clickCamera : Camera.main;
-        if (cam == null) return;
-
-        Vector2 screenPos = mouse.position.ReadValue();
-        Vector3 screen = new Vector3(screenPos.x, screenPos.y, Mathf.Abs(cam.transform.position.z - transform.position.z));
-        Vector3 world = cam.ScreenToWorldPoint(screen);
-
-        Collider2D hit = Physics2D.OverlapPoint(new Vector2(world.x, world.y));
-        if (hit == null) return;
-        if (hit.GetComponentInParent<PlantPot>() != this) return;
-
-        harvestPopupController.Show(currentPlantData, 1);
-    }
+    // ---------- Planting ----------
 
     // Public entry point. Called by UIDragSeed when a seed is dropped on this pot.
     // Returns true if a plant was actually spawned.
@@ -91,58 +63,13 @@ public class PlantPot : MonoBehaviour
     {
         if (!CanPlant(plantData)) return false;
 
-        currentPlantData = plantData;
         SpawnPlant(plantData.plantPrefab);
         MarkAsOccupied();
         HidePlusSignHint();
 
-        Debug.Log($"[WaterMeter] Plant() succeeded on '{name}'.");
-        Debug.Log($"[WaterMeter] waterMeterUI is {(waterMeterUI == null ? "NULL" : "assigned: '" + waterMeterUI.name + "'")}.");
-        if (waterMeterUI != null)
-        {
-            Debug.Log($"[WaterMeter] Calling waterMeterUI.Show() on '{waterMeterUI.name}'.");
-            waterMeterUI.Show();
-        }
+        if (waterMeterUI != null) waterMeterUI.Show();
         sunSlotsManager?.ShowSlots(plantData.requiredSunCount);
         sunSpawner?.SetAvailableSuns(plantData.requiredSunCount);
-        return true;
-    }
-
-    // Called by SunSlotsManager when every active SunSlot has been filled.
-    public void OnAllSunSlotsFilled()
-    {
-        Debug.Log($"[PlantPot] All sun slots filled on '{name}' — advancing growth");
-        currentPlantGrowth?.GrowToNextStage();
-    }
-
-    // Called by WorldDraggableTool (Water Can) when released on this pot.
-    // Returns true if watering actually advanced the plant.
-    public bool Water()
-    {
-        if (!isOccupied) return false;
-        if (currentPlantGrowth == null) return false;
-
-        currentPlantGrowth.GrowToNextStage();
-        return true;
-    }
-
-    // Called by WaterParticleCollision each time a water particle hits the pot.
-    // Advances the UI meter; once the meter completes, performs the one-shot
-    // watering (Water() + hide meter) and locks out further hits.
-    // Returns true on the call that completed the meter.
-    public bool AddWaterProgress(float amount)
-    {
-        if (!isOccupied) return false;
-        if (currentPlantGrowth == null) return false;
-        if (hasBeenWatered) return false;
-        if (waterMeterUI == null) return false;
-
-        bool filled = waterMeterUI.AddFill(amount);
-        if (!filled) return false;
-
-        hasBeenWatered = true;
-        Water();
-        waterMeterUI.Hide();
         return true;
     }
 
@@ -181,5 +108,46 @@ public class PlantPot : MonoBehaviour
     {
         if (plusSignHint == null) return;
         plusSignHint.SetActive(false);
+    }
+
+    // ---------- Sun ----------
+
+    // Called by SunSlotsManager when every active SunSlot has been filled.
+    public void OnAllSunSlotsFilled()
+    {
+        currentPlantGrowth?.GrowToNextStage();
+    }
+
+    // ---------- Water ----------
+
+    // Called by WorldDraggableTool (Water Can) when released on this pot.
+    // Returns true if watering actually advanced the plant.
+    public bool Water()
+    {
+        if (!isOccupied) return false;
+        if (currentPlantGrowth == null) return false;
+
+        currentPlantGrowth.GrowToNextStage();
+        return true;
+    }
+
+    // Called by WaterParticleCollision each time a water particle hits the pot.
+    // Advances the UI meter; once the meter completes, performs the one-shot
+    // watering (Water() + hide meter) and locks out further hits.
+    // Returns true on the call that completed the meter.
+    public bool AddWaterProgress(float amount)
+    {
+        if (!isOccupied) return false;
+        if (currentPlantGrowth == null) return false;
+        if (hasBeenWatered) return false;
+        if (waterMeterUI == null) return false;
+
+        bool filled = waterMeterUI.AddFill(amount);
+        if (!filled) return false;
+
+        hasBeenWatered = true;
+        Water();
+        waterMeterUI.Hide();
+        return true;
     }
 }

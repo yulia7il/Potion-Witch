@@ -198,24 +198,19 @@ public class WorldDraggableTool : MonoBehaviour
 
         if (slot == null)
         {
-            Debug.Log("[WorldDrag] Sun: no slot found under pointer");
             ownCollider.enabled = true;
             ReturnToStart();
             return;
         }
 
-        Debug.Log($"[WorldDrag] Sun dropped on slot '{slot.name}'");
-
         if (slot.Fill())
         {
-            Debug.Log($"[WorldDrag] Slot fill succeeded on '{slot.name}'");
             slot.GetComponentInParent<SunSlotsManager>()?.CheckCompletion();
             parentSpawner?.NotifyActiveSunResolved();
             Destroy(gameObject);
         }
         else
         {
-            Debug.Log($"[WorldDrag] Slot fill failed — '{slot.name}' already filled");
             ownCollider.enabled = true;
             ReturnToStart();
         }

@@ -37,41 +37,19 @@ public class SunSpawner : MonoBehaviour
         if (!mouse.leftButton.wasPressedThisFrame) return;
 
         Vector3 worldPos = GetPointerWorldPosition();
-        Debug.Log($"[SunSpawner] Pointer down at world pos {worldPos}");
 
         Collider2D hit = Physics2D.OverlapPoint(new Vector2(worldPos.x, worldPos.y));
+        if (hit == null) return;
 
-        if (hit == null)
-        {
-            Debug.Log("[SunSpawner] No collider hit");
-            return;
-        }
+        if (hit != ownCollider && !hit.transform.IsChildOf(transform)) return;
 
-        Debug.Log($"[SunSpawner] Hit collider: {hit.name}");
-
-        if (hit != ownCollider && !hit.transform.IsChildOf(transform))
-        {
-            Debug.Log($"[SunSpawner] Hit does not belong to SunJar");
-            return;
-        }
-
-        Debug.Log("[SunSpawner] Hit belongs to SunJar");
         TrySpawn();
     }
 
     private void TrySpawn()
     {
-        if (availableSuns <= 0)
-        {
-            Debug.Log("[SunSpawner] Blocked: no available suns");
-            return;
-        }
-
-        if (hasActiveSun)
-        {
-            Debug.Log("[SunSpawner] Blocked: already has active sun");
-            return;
-        }
+        if (availableSuns <= 0) return;
+        if (hasActiveSun) return;
 
         SpawnSun();
     }
@@ -99,7 +77,6 @@ public class SunSpawner : MonoBehaviour
 
         availableSuns--;
         hasActiveSun = true;
-        Debug.Log("[SunSpawner] Spawned Sun");
     }
 
     private Vector3 GetPointerWorldPosition()

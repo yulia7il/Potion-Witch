@@ -39,7 +39,6 @@ public class WaterParticleCollision : MonoBehaviour
         if (Time.time < nextWaterTime) return;
 
         nextWaterTime = Time.time + waterCooldown;
-        Debug.Log($"[WaterParticles] Adding {waterAmountPerHit:0.##} progress to '{pot.name}'");
         pot.AddWaterProgress(waterAmountPerHit);
     }
 }
