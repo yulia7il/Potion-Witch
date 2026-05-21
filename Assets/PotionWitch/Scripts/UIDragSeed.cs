@@ -9,11 +9,11 @@ using UnityEngine.UI;
 public class UIDragSeed : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [Tooltip("Optional. CanvasGroup of the inventory panel. " +
-             "Hidden visually on drag start (alpha=0, raycasts off, non-interactable) " +
-             "instead of using SetActive(false) which would kill the drag flow. " +
-             "Restored on drag end if planting failed.")]
-    public CanvasGroup inventoryCanvasGroup;
+    [Tooltip("Scene PopupManager. Used to close the inventory popup (and the shared overlay) on drag start, and to re-open it if planting fails.")]
+    [SerializeField] private PopupManager popupManager;
+
+    [Tooltip("Root of the inventory popup (INV_SelectSeed). Should have a CanvasGroup so PopupManager hides it without disabling its children — that keeps the drag flow alive.")]
+    [SerializeField] private GameObject inventoryPopupRoot;
 
     [Tooltip("Optional. UI prefab used as the drag ghost. Must contain an Image " +
              "on its root or in a child. If null, a basic Image is built in code.")]
@@ -180,21 +180,20 @@ public class UIDragSeed : MonoBehaviour,
         return pot.Plant(item.plantData);
     }
 
-    // Hides the inventory without disabling its GameObject (keeps drag alive).
+    // Closes the inventory popup through PopupManager so the shared overlay
+    // is hidden and PopupManager's currentlyOpenPopup state is cleared.
+    // Relies on PopupManager hiding the popup via its CanvasGroup (when present),
+    // which keeps the dragged seed-item active and the drag flow alive.
     private void HideInventoryVisual()
     {
-        if (inventoryCanvasGroup == null) return;
-        inventoryCanvasGroup.alpha = 0f;
-        inventoryCanvasGroup.blocksRaycasts = false;
-        inventoryCanvasGroup.interactable = false;
+        if (popupManager == null || inventoryPopupRoot == null) return;
+        popupManager.Close(inventoryPopupRoot);
     }
 
-    // Restores inventory visibility and interaction.
+    // Re-opens the inventory popup through PopupManager (also brings the overlay back).
     private void RestoreInventoryVisual()
     {
-        if (inventoryCanvasGroup == null) return;
-        inventoryCanvasGroup.alpha = 1f;
-        inventoryCanvasGroup.blocksRaycasts = true;
-        inventoryCanvasGroup.interactable = true;
+        if (popupManager == null || inventoryPopupRoot == null) return;
+        popupManager.Open(inventoryPopupRoot);
     }
 }

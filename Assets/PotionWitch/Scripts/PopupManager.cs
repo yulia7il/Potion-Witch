@@ -5,6 +5,11 @@ using UnityEngine;
 // duplicate that bookkeeping. Stays generic — doesn't care what a popup
 // contains.
 //
+// Hide strategy:
+//   - If the popup has a CanvasGroup, hide via alpha=0 + raycasts/interactable off,
+//     so children stay active (e.g. an in-progress UI drag survives).
+//   - Otherwise, SetActive(false) on the popup root.
+//
 // Public API:
 //   Open(popup)         — show this popup (closes any other open one first)
 //   Close()             — close whichever popup is currently open
@@ -38,13 +43,13 @@ public class PopupManager : MonoBehaviour
 
         CloseCurrentIfDifferent(popup);
         ShowOverlay();
-        popup.SetActive(true);
+        ShowPopup(popup);
         currentlyOpenPopup = popup;
     }
 
     public void Close()
     {
-        if (currentlyOpenPopup != null) currentlyOpenPopup.SetActive(false);
+        if (currentlyOpenPopup != null) HidePopup(currentlyOpenPopup);
         HideOverlay();
         currentlyOpenPopup = null;
     }
@@ -53,7 +58,7 @@ public class PopupManager : MonoBehaviour
     {
         if (popup == null) return;
 
-        popup.SetActive(false);
+        HidePopup(popup);
 
         if (popup == currentlyOpenPopup)
         {
@@ -68,7 +73,34 @@ public class PopupManager : MonoBehaviour
     {
         if (currentlyOpenPopup != null && currentlyOpenPopup != incoming)
         {
-            currentlyOpenPopup.SetActive(false);
+            HidePopup(currentlyOpenPopup);
+        }
+    }
+
+    private void ShowPopup(GameObject popup)
+    {
+        popup.SetActive(true);
+        CanvasGroup cg = popup.GetComponent<CanvasGroup>();
+        if (cg != null)
+        {
+            cg.alpha = 1f;
+            cg.blocksRaycasts = true;
+            cg.interactable = true;
+        }
+    }
+
+    private void HidePopup(GameObject popup)
+    {
+        CanvasGroup cg = popup.GetComponent<CanvasGroup>();
+        if (cg != null)
+        {
+            cg.alpha = 0f;
+            cg.blocksRaycasts = false;
+            cg.interactable = false;
+        }
+        else
+        {
+            popup.SetActive(false);
         }
     }
 
