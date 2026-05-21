@@ -67,7 +67,7 @@ public class PlantPot : MonoBehaviour, IPopupGate
         MarkAsOccupied();
         HidePlusSignHint();
 
-        if (waterMeterUI != null) waterMeterUI.Show();
+        if (waterMeterUI != null) waterMeterUI.ResetMeter();
         sunSlotsManager?.ShowSlots(plantData.requiredSunCount);
         sunSpawner?.SetAvailableSuns(plantData.requiredSunCount);
         return true;
@@ -116,6 +116,64 @@ public class PlantPot : MonoBehaviour, IPopupGate
     public void OnAllSunSlotsFilled()
     {
         currentPlantGrowth?.GrowToNextStage();
+    }
+
+    // ---------- Harvest ----------
+
+    // Public entry point. Called by HarvestCollectButton when the player
+    // clicks Collect in the harvest popup. Resets the pot to empty state.
+    // Closing the popup itself is handled by PopupCloser on the same button,
+    // so this method only owns the gameplay reset.
+    //
+    // MVP: no inventory system yet — the harvested plant is simply removed.
+    // When an inventory system is added later, give the seed/leaf to it from here.
+    public void Harvest()
+    {
+        if (!CanHarvest()) return;
+
+        DestroyPlantInstance();
+        HideWaterMeter();
+        HideSunSlots();
+        ResetSunSpawner();
+        ShowPlusSignHint();
+        ClearOccupancy();
+    }
+
+    private void DestroyPlantInstance()
+    {
+        if (currentPlantInstance != null) Destroy(currentPlantInstance);
+        currentPlantInstance = null;
+        currentPlantGrowth = null;
+    }
+
+    private void HideWaterMeter()
+    {
+        if (waterMeterUI != null) waterMeterUI.Hide();
+    }
+
+    private void HideSunSlots()
+    {
+        if (sunSlotsManager != null) sunSlotsManager.HideSlots();
+    }
+
+    private void ResetSunSpawner()
+    {
+        if (sunSpawner != null) sunSpawner.SetAvailableSuns(0);
+    }
+
+    // Mirror of HidePlusSignHint — brings the empty-pot indicator back so
+    // the player knows they can plant a fresh seed.
+    private void ShowPlusSignHint()
+    {
+        if (plusSignHint == null) return;
+        plusSignHint.SetActive(true);
+    }
+
+    // Clears the flags that gate planting / watering for the next cycle.
+    private void ClearOccupancy()
+    {
+        isOccupied = false;
+        hasBeenWatered = false;
     }
 
     // ---------- Water ----------

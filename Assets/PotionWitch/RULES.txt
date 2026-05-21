@@ -1,0 +1,131 @@
+# Potion Witch - Project Rules
+
+This project is built by a beginner Unity developer who is learning programming through building a real game.
+
+The goal is not only to make the game work.
+The goal is to learn clean architecture and understand every system.
+
+---
+
+# Core Principles
+
+- Prefer simple solutions.
+- Prefer readability over clever code.
+- Keep scripts small and focused.
+- One script = one responsibility.
+- Avoid duplicated logic.
+- Avoid hidden side effects.
+- Avoid unnecessary abstractions.
+- Do not introduce systems before they are needed.
+
+---
+
+# Before Changing Code
+
+Always:
+
+1. Read the relevant scripts.
+2. Explain the current architecture.
+3. Explain the problem.
+4. Explain the cleanest solution.
+5. List files that will be modified.
+
+Do NOT start coding immediately.
+
+---
+
+# After Changing Code
+
+Always explain:
+
+- What changed
+- Why it changed
+- New functions added
+- Functions removed
+- Flow after the change
+- What should be tested in Unity
+
+---
+
+# Learning Mode
+
+Assume the developer is learning.
+
+When introducing code:
+
+- Explain responsibilities.
+- Explain data flow.
+- Explain why each function exists.
+- Explain how scripts communicate.
+- Use beginner-friendly language.
+
+Do not just provide code.
+
+Teach through the implementation.
+
+---
+
+# Architecture Rules
+
+PlantData
+- Holds plant configuration only.
+
+PlantGrowth
+- Handles visual growth stages only.
+
+PlantWaterMeterUI
+- Handles water UI only.
+
+SunSlot
+- Handles a single slot only.
+
+SunSlotsManager
+- Manages a collection of slots.
+
+PlantPot
+- Main controller of a planted pot.
+- Source of truth for plant state.
+
+PopupManager
+- Only system allowed to open/close popups.
+
+PopupOpener
+- Requests popup opening.
+
+PopupCloser
+- Requests popup closing.
+
+---
+
+# Popup Rule
+
+Never directly call:
+
+popup.SetActive(true)
+popup.SetActive(false)
+
+from random scripts.
+
+All popup operations must go through PopupManager.
+
+---
+
+# Refactoring Rule
+
+If duplicated logic or unnecessary complexity is found:
+
+1. Explain the issue.
+2. Propose a cleaner alternative.
+3. Wait for approval if the change is architectural.
+
+---
+
+# MVP Rule
+
+Do not build future systems early.
+
+Temporary MVP solutions are allowed if:
+
+- Clearly marked as temporary.
+- Easy to replace later.
+- Do not create technical debt.

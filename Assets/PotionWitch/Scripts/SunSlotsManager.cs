@@ -15,6 +15,18 @@ public class SunSlotsManager : MonoBehaviour
     [Tooltip("The PlantPot to notify when all active slots are filled.")]
     [SerializeField] private PlantPot plantPot;
 
+    // Deactivates every slot in the row. Used by PlantPot.Harvest() to clear
+    // the row when the plant is collected.
+    public void HideSlots()
+    {
+        if (slots == null) return;
+        foreach (SunSlot slot in slots)
+        {
+            if (slot == null) continue;
+            slot.gameObject.SetActive(false);
+        }
+    }
+
     // Activates the first `amount` slots in their empty state; deactivates the rest.
     public void ShowSlots(int amount)
     {
