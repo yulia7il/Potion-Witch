@@ -2,7 +2,16 @@
   "permissions": {
     "allow": [
       "Bash(xargs grep -l \"guid: fe87c0e1cc204ed48ad3b37840f39efc\\\\|guid: 31a19414c41e5ae4aae2af33fee712f6\\\\|guid: dc42784cf147c0c48a680349fa168899\\\\|guid: 0cd44c1031e13a943bb63640046fad76\\\\|guid: 9fd2648e8ea494b7aaeaaa1ea71c5d3c\\\\|guid: 4e29b1a8efbd4b44bb3f3716e73f07ff\\\\|guid: 76c392e42b5098c458856cdf6ecaaaa1\\\\|guid: 01614664b831546d2ae94a42149d80ac\\\\|guid: 2bcd2660ca9b64942af0de543d8d7100\")",
-      "Bash(grep -l \"guid: $\\(grep guid: 'C:\\\\UnityProjects\\\\Git\\\\Potion-Witch\\\\Assets\\\\Sprites\\\\Square.png.meta')"
+      "Bash(grep -l \"guid: $\\(grep guid: 'C:\\\\UnityProjects\\\\Git\\\\Potion-Witch\\\\Assets\\\\Sprites\\\\Square.png.meta')",
+      "Bash(set -e)",
+      "Bash(mv \"Assets/PotionWitch/UI/ActionLists\" \"Assets/PotionWitch/UI/ActionLists.meta\" _Archive_ToReview/PotionWitch_AC_residue/)",
+      "Bash(mv \"Assets/PotionWitch/UI/ActionLists 1\" \"Assets/PotionWitch/UI/ActionLists 1.meta\" _Archive_ToReview/PotionWitch_AC_residue/)",
+      "Bash(rmdir \"Assets/PotionWitch/UI\")",
+      "Bash(rm \"Assets/PotionWitch/UI.meta\")",
+      "Bash(rmdir \"Assets/Scenes\")",
+      "Bash(rm \"Assets/Scenes.meta\")",
+      "Bash(rmdir \"Assets/Sprites\")",
+      "Bash(xargs grep -l \"using AC;\\\\|AC\\\\.\")"
     ]
   }
 }

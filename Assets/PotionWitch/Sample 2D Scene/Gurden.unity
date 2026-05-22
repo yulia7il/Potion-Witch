@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &2025093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2025094}
+  m_Layer: 0
+  m_Name: ActiveVisual_BakedSuns
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2025094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025093}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5158325904855232195}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &92958783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,6 +1176,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3d5f7a9c2e4b6d8f0a1c3e5d7b9f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SunSlot
+--- !u!1 &1088576344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1088576345}
+  m_Layer: 0
+  m_Name: InactiveVisual_EmptyJar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1088576345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088576344}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5158325904855232195}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1338335933
 GameObject:
   m_ObjectHideFlags: 0
@@ -2339,7 +2401,6 @@ GameObject:
   - component: {fileID: 2087980763}
   - component: {fileID: 2087980762}
   - component: {fileID: 2087980761}
-  - component: {fileID: 2087980764}
   - component: {fileID: 2087980765}
   m_Layer: 0
   m_Name: Main Camera
@@ -2422,22 +2483,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2087980764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2087980760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fd2648e8ea494b7aaeaaa1ea71c5d3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: AC::AC.MainCamera
-  fadeTexture: {fileID: 2800000, guid: 2de7d16b4ac4b402182d4f2ca40e0b2d, type: 3}
-  renderFading: 1
-  renderBorders: 1
-  forwardDirection: 0
 --- !u!114 &2087980765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4340,6 +4385,8 @@ Transform:
   - {fileID: 4764382961945429930}
   - {fileID: 1815987103665611014}
   - {fileID: 8506002004235897248}
+  - {fileID: 2025094}
+  - {fileID: 1088576345}
   m_Father: {fileID: 326267661}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5158325904855232196
@@ -4359,6 +4406,8 @@ MonoBehaviour:
   spawnCamera: {fileID: 2087980762}
   availableSuns: 0
   hasActiveSun: 0
+  activeVisual: {fileID: 2025093}
+  inactiveVisual: {fileID: 1088576344}
 --- !u!61 &5158325904855232197
 BoxCollider2D:
   m_ObjectHideFlags: 0
