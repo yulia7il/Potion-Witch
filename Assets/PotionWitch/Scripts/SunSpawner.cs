@@ -81,7 +81,14 @@ public class SunSpawner : MonoBehaviour
         GameObject sun = Instantiate(sunPrefab, spawnAt.position, Quaternion.identity, transform);
 
         WorldDraggableTool drag = sun.GetComponent<WorldDraggableTool>();
-        if (drag != null) drag.parentSpawner = this;
+        if (drag != null)
+        {
+            drag.parentSpawner = this;
+            // Start dragging in the same frame so the Sun feels pulled out of the
+            // jar — without this the player would have to release and click again
+            // because the spawning mouse-down event was already consumed by this script.
+            drag.BeginDrag();
+        }
 
         availableSuns--;
         hasActiveSun = true;

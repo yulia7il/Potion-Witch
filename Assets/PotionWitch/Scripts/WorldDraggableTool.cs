@@ -123,7 +123,9 @@ public class WorldDraggableTool : MonoBehaviour
 
     // Records the offset between the tool and the cursor so the sprite
     // stays anchored to the grab point instead of snapping to the pointer.
-    private void BeginDrag()
+    // Public so a spawner can start the drag in the same frame the tool is
+    // instantiated — otherwise the player would have to release and click again.
+    public void BeginDrag()
     {
         dragDepth = transform.position.z;
         Vector3 mouseWorld = GetMouseWorldPosition();
@@ -189,7 +191,9 @@ public class WorldDraggableTool : MonoBehaviour
 
     // Sun: look for an empty SunSlot, fill it and consume the dragged sun.
     // Own collider is disabled before the overlap check so Physics2D sees through
-    // the Sun to the slot underneath, then re-enabled only if the Sun returns to start.
+    // the Sun to the slot underneath, then re-enabled if the drop did not consume
+    // the Sun. On a miss the Sun stays exactly where it was released so the player
+    // can pick it up again and try a different slot.
     private void HandleSunRelease()
     {
         ownCollider.enabled = false;
@@ -199,7 +203,6 @@ public class WorldDraggableTool : MonoBehaviour
         if (slot == null)
         {
             ownCollider.enabled = true;
-            ReturnToStart();
             return;
         }
 
@@ -212,7 +215,6 @@ public class WorldDraggableTool : MonoBehaviour
         else
         {
             ownCollider.enabled = true;
-            ReturnToStart();
         }
     }
 
