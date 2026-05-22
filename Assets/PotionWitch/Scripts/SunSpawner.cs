@@ -22,11 +22,18 @@ public class SunSpawner : MonoBehaviour
     [Tooltip("True while a spawned Sun is still in the scene and unresolved.")]
     public bool hasActiveSun;
 
+    [Tooltip("Visual shown when the jar has suns to dispense (availableSuns > 0).")]
+    [SerializeField] private GameObject activeVisual;
+
+    [Tooltip("Visual shown when the jar has no suns to dispense (availableSuns == 0).")]
+    [SerializeField] private GameObject inactiveVisual;
+
     private Collider2D ownCollider;
 
     private void Awake()
     {
         ownCollider = GetComponent<Collider2D>();
+        RefreshVisualState();
     }
 
     private void Update()
@@ -59,6 +66,7 @@ public class SunSpawner : MonoBehaviour
     {
         availableSuns = amount;
         hasActiveSun = false;
+        RefreshVisualState();
     }
 
     // Called by WorldDraggableTool after a Sun is successfully dropped into a slot.
@@ -77,6 +85,15 @@ public class SunSpawner : MonoBehaviour
 
         availableSuns--;
         hasActiveSun = true;
+        RefreshVisualState();
+    }
+
+    // Swaps child visuals so the SunJar GameObject itself stays enabled in the scene.
+    private void RefreshVisualState()
+    {
+        bool hasSuns = availableSuns > 0;
+        if (activeVisual != null) activeVisual.SetActive(hasSuns);
+        if (inactiveVisual != null) inactiveVisual.SetActive(!hasSuns);
     }
 
     private Vector3 GetPointerWorldPosition()

@@ -3590,6 +3590,7 @@ GameObject:
   - component: {fileID: 8514813911187646495}
   - component: {fileID: 1513660657511351219}
   - component: {fileID: 6722358621060276193}
+  - component: {fileID: 8514813911187646496}
   m_Layer: 5
   m_Name: OK_Button
   m_TagString: Untagged
@@ -5363,6 +5364,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3277324105700733632}
   m_CullTransparentMesh: 1
+--- !u!114 &8514813911187646496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3277324105700733632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cd3678fe2f196743ae942a0f3d3ad10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HarvestCollectButton
+  plantPot: {fileID: 1616848867}
 --- !u!222 &8532147340913993196
 CanvasRenderer:
   m_ObjectHideFlags: 0
