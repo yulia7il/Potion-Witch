@@ -396,11 +396,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1606622972}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 50, y: 45.35}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &138204621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1012,7 +1012,7 @@ GameObject:
   - component: {fileID: 909401274}
   - component: {fileID: 909401273}
   m_Layer: 5
-  m_Name: Slot_Empty
+  m_Name: PlusButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1257,7 +1257,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 8181083953524355727, guid: f6fe9cdd1bec8e04aba5141a29ad1f64, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1375,7 +1375,7 @@ GameObject:
   - component: {fileID: 1489524024}
   - component: {fileID: 1489524025}
   m_Layer: 5
-  m_Name: Slot_1
+  m_Name: IngredientSlot_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1399,7 +1399,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -273, y: -58}
+  m_AnchoredPosition: {x: -273, y: -58.000008}
   m_SizeDelta: {x: 232, y: 281}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1489524025
@@ -1421,7 +1421,7 @@ GameObject:
   - component: {fileID: 1606622972}
   - component: {fileID: 1606622973}
   m_Layer: 5
-  m_Name: Slot_Mint
+  m_Name: IngredientView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
