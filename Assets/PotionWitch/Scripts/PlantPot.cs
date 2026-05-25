@@ -27,10 +27,17 @@ public class PlantPot : MonoBehaviour, IPopupGate
     [Tooltip("SunJar linked to this pot. Receives the sun budget when a plant is placed.")]
     [SerializeField] private SunSpawner sunSpawner;
 
+    [Tooltip("Scene InventoryManager. Receives the plant's harvest item when Harvest() runs.")]
+    [SerializeField] private InventoryManager inventoryManager;
+
     // Cached references to the plant we spawned. Kept private so external
     // callers go through Water() / future helpers instead of poking at state.
     private GameObject currentPlantInstance;
     private PlantGrowth currentPlantGrowth;
+
+    // The PlantData used for the currently planted plant. Stored so Harvest()
+    // can look up which inventory item to grant. Cleared on harvest.
+    private PlantData currentPlantData;
 
     // True once the water meter has been filled for the current plant. Locks
     // out further watering progress so the plant only grows one stage from
@@ -63,6 +70,7 @@ public class PlantPot : MonoBehaviour, IPopupGate
     {
         if (!CanPlant(plantData)) return false;
 
+        currentPlantData = plantData;
         SpawnPlant(plantData.plantPrefab);
         MarkAsOccupied();
         HidePlusSignHint();
@@ -121,22 +129,50 @@ public class PlantPot : MonoBehaviour, IPopupGate
     // ---------- Harvest ----------
 
     // Public entry point. Called by HarvestCollectButton when the player
-    // clicks Collect in the harvest popup. Resets the pot to empty state.
+    // clicks Collect in the harvest popup. Grants the plant's harvest item
+    // to the inventory, then resets the pot to empty state.
     // Closing the popup itself is handled by PopupCloser on the same button,
-    // so this method only owns the gameplay reset.
-    //
-    // MVP: no inventory system yet — the harvested plant is simply removed.
-    // When an inventory system is added later, give the seed/leaf to it from here.
+    // so this method only owns the gameplay reset + inventory grant.
     public void Harvest()
     {
         if (!CanHarvest()) return;
 
+        AddHarvestToInventory();
         DestroyPlantInstance();
         HideWaterMeter();
         HideSunSlots();
         ResetSunSpawner();
         ShowPlusSignHint();
         ClearOccupancy();
+    }
+
+    // Looks up the inventory item defined on the planted PlantData and adds
+    // one to the InventoryManager. Skips if any wiring is missing so a
+    // half-configured pot still resets cleanly. Missing data emits a warning
+    // so setup problems are obvious in the Console (TEMPORARY debug aid).
+    private void AddHarvestToInventory()
+    {
+        if (inventoryManager == null) return;
+
+        // TEMPORARY warnings — flag setup mistakes while the inventory is new.
+        if (currentPlantData == null)
+        {
+            Debug.LogWarning($"[Harvest] '{name}' has no currentPlantData — nothing to add to inventory.");
+            return;
+        }
+
+        InventoryItemData item = currentPlantData.HarvestItem;
+        if (item == null)
+        {
+            Debug.LogWarning($"[Harvest] PlantData '{currentPlantData.name}' has no HarvestItem assigned — assign one in the Inspector.");
+            return;
+        }
+
+        // TEMPORARY debug logs — remove once an Inventory UI shows quantities.
+        Debug.Log($"[Harvest] Harvesting {item.itemName}");
+        Debug.Log($"[Harvest] Adding {item.name} to inventory");
+
+        inventoryManager.AddItem(item, 1);
     }
 
     private void DestroyPlantInstance()
@@ -174,6 +210,7 @@ public class PlantPot : MonoBehaviour, IPopupGate
     {
         isOccupied = false;
         hasBeenWatered = false;
+        currentPlantData = null;
     }
 
     // ---------- Water ----------

@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6cbaf0d6099ffc45bee19e745a6afda, type: 3}
+  m_Name: ITEM_Mint
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItemData
+  itemName: Plant_Mint
+  icon: {fileID: 8181083953524355727, guid: f6fe9cdd1bec8e04aba5141a29ad1f64, type: 3}

@@ -17,3 +17,4 @@ MonoBehaviour:
   leafIcon: {fileID: -2579403789580530901, guid: b5c67f6416b06ed4caae10d674ef2cdb, type: 3}
   plantPrefab: {fileID: 2287201053190541031, guid: e6c172569540621408e9e732ddeb235c, type: 3}
   requiredSunCount: 4
+  harvestItem: {fileID: 11400000, guid: afffb18bf40eca7458418c55308d40af, type: 2}
