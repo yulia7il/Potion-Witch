@@ -2103,6 +2103,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1338981866}
   m_CullTransparentMesh: 1
+--- !u!1 &1445956538
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1445956540}
+  - component: {fileID: 1445956539}
+  m_Layer: 0
+  m_Name: CHEAT
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1445956539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445956538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a1c4086dc9a71c408bb4a22c553fda6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryDebugCheats
+  mintItem: {fileID: 11400000, guid: 8b024b291c35c2440bb5fe4608937b63, type: 2}
+  sageItem: {fileID: 11400000, guid: afffb18bf40eca7458418c55308d40af, type: 2}
+  inventoryManager: {fileID: 1557474983}
+  cauldronInventoryBarUI: {fileID: 770911127}
+--- !u!4 &1445956540
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445956538}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.37091, y: -0.00478, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1489524023
 GameObject:
   m_ObjectHideFlags: 0
@@ -5451,3 +5499,4 @@ SceneRoots:
   - {fileID: 185422638}
   - {fileID: 1652500981}
   - {fileID: 326267661}
+  - {fileID: 1445956540}
