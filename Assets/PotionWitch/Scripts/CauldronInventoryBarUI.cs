@@ -18,11 +18,24 @@ public class CauldronInventoryBarUI : MonoBehaviour
     [Tooltip("Fixed slot UIs, in display order. Assigned in the Inspector.")]
     [SerializeField] private List<CauldronInventorySlotUI> slots = new List<CauldronInventorySlotUI>();
 
-    // Re-sync whenever the bar becomes visible (e.g. cauldron popup opens).
-    // Good enough for the MVP — a full event system can replace this later.
+    // Set true after the first Start(). Used to skip the very first OnEnable,
+    // which fires before InventoryManager.Awake has had a chance to set Instance
+    // when the Cauldron scene is the first scene loaded.
+    private bool hasStarted = false;
+
+    // Start runs after every Awake in the scene, so InventoryManager.Instance
+    // is guaranteed to be set by now (if one exists in the scene at all).
+    private void Start()
+    {
+        hasStarted = true;
+        Refresh();
+    }
+
+    // Re-sync whenever the bar becomes visible again (e.g. cauldron popup
+    // reopens). Skipped on the first activation — Start() handles that.
     private void OnEnable()
     {
-        Refresh();
+        if (hasStarted) Refresh();
     }
 
     // Reads the current inventory and pushes it into the fixed slots.
