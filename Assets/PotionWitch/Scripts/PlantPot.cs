@@ -149,12 +149,23 @@ public class PlantPot : MonoBehaviour, IPopupGate
     // Looks up the inventory item defined on the planted PlantData and adds
     // one to the InventoryManager. Skips if any wiring is missing so a
     // half-configured pot still resets cleanly. Missing data emits a warning
-    // so setup problems are obvious in the Console (TEMPORARY debug aid).
+    // so setup problems are obvious in the Console.
     private void AddHarvestToInventory()
     {
-        if (inventoryManager == null) return;
+        // Always prefer the persistent singleton — survives scene loads, so
+        // pots that weren't wired up in the Inspector still hit the right
+        // inventory. The serialized field is kept as a fallback for scenes
+        // launched in isolation (Play directly in the Garden scene) where
+        // the singleton may not have been created yet.
+        InventoryManager target = InventoryManager.Instance != null ? InventoryManager.Instance : inventoryManager;
 
-        // TEMPORARY warnings — flag setup mistakes while the inventory is new.
+        if (target == null)
+        {
+            Debug.LogWarning($"[Harvest] '{name}' could not find an InventoryManager. " +
+                             "Make sure one exists in the scene (or persists via DontDestroyOnLoad).");
+            return;
+        }
+
         if (currentPlantData == null)
         {
             Debug.LogWarning($"[Harvest] '{name}' has no currentPlantData — nothing to add to inventory.");
@@ -168,11 +179,8 @@ public class PlantPot : MonoBehaviour, IPopupGate
             return;
         }
 
-        // TEMPORARY debug logs — remove once an Inventory UI shows quantities.
-        Debug.Log($"[Harvest] Harvesting {item.itemName}");
-        Debug.Log($"[Harvest] Adding {item.name} to inventory");
-
-        inventoryManager.AddItem(item, 1);
+        target.AddItem(item, 1);
+        Debug.Log($"[Harvest] Collected {item.itemName} (Total: {target.GetAmount(item)})");
     }
 
     private void DestroyPlantInstance()
