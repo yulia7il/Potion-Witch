@@ -52,11 +52,13 @@ public class PlantPot : MonoBehaviour, IPopupGate
     // ---------- Harvest gate ----------
 
     // True when this pot holds a fully grown plant the player can harvest.
+    // Mature is the final reachable stage in current gameplay (Full is the
+    // reserved-for-later third visual). Change this if Full gets wired up.
     public bool CanHarvest()
     {
         if (!isOccupied) return false;
         if (currentPlantGrowth == null) return false;
-        return currentPlantGrowth.CurrentStage == PlantGrowth.GrowthStage.Full;
+        return currentPlantGrowth.CurrentStage == PlantGrowth.GrowthStage.Mature;
     }
 
     // IPopupGate — used by PopupOpener on this pot to gate the harvest popup.
